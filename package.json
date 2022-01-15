@@ -1,54 +1,54 @@
 {
-  "name": "c137.js",
-  "version": "1.88.0",
-  "description": "A single-file distribution of CesiumJS",
-  "main": "dist/c137.mjs",
-  "type": "module",
-  "files": [
-    "package.json",
-    "dist/c137.mjs"
-  ],
-  "scripts": {
-    "postinstall": "mkdir -p dist",
-    "update:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
-    "build": "npm run refresh:cesium && npm run build:workers && node --max-old-space-size=4096 --loader ts-node/esm ./src/index.ts && npm run update:version",
-    "build:short": "npm run build:workers && node --loader ts-node/esm ./src/index.ts",
-    "refresh:cesium": "cd cesium && git reset --hard && git clean -fxd && git fetch && git checkout 1.88 && npm i --force && npm run build",
-    "build:workers": "rm -rf ./cesium/Source/Workers && cp -R ./cesium/Source/WorkersES6 ./cesium/Source/Workers && cp -R ./src/source-files/Source/WorkersES6/* ./cesium/Source/Workers/ && node --max-old-space-size=4096 --loader ts-node/esm ./src/workerPrep.ts",
-    "build:widgets": "ls",
-    "test": "cp ./cesium/Source/Cesium.js ./cesium/Source/Cesium.bak && cp ./dist/c137.mjs ./cesium/Source/Cesium.js && cd cesium && npm run test && cp Source/Cesium.bak Source/Cesium.js"
-  },
-  "author": "DigitalArsenal.io, Inc. <admin@digitalarsenal.io> (https://digitalarsenal.io)",
-  "maintainers": [
-    "tj@digitalarsenal.io"
-  ],
-  "funding": [
-    {
-      "type": "BITCOIN",
-      "url": "https://live.blockcypher.com/btc/address/3H8Jh35kE652PLGNCzfB8QWmj7jkgQKhVm/"
+    "name": "c137.js",
+    "version": "1.89.0",
+    "description": "A single-file distribution of CesiumJS",
+    "main": "dist/c137.mjs",
+    "type": "module",
+    "files": [
+        "package.json",
+        "dist/c137.mjs"
+    ],
+    "scripts": {
+        "postinstall": "mkdir -p dist",
+        "update:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
+        "build": "npm run refresh:cesium && npm run build:workers && node --max-old-space-size=4096 --loader ts-node/esm ./src/index.ts && npm run update:version",
+        "build:short": "npm run build:workers && node --loader ts-node/esm ./src/index.ts",
+        "refresh:cesium": "cd cesium && git reset --hard && git clean -fxd && git fetch && git checkout 1.89 && npm i --force && npm run build",
+        "build:workers": "rm -rf ./cesium/Source/Workers && cp -R ./cesium/Source/WorkersES6 ./cesium/Source/Workers && cp -R ./src/source-files/Source/WorkersES6/* ./cesium/Source/Workers/ && node --max-old-space-size=4096 --loader ts-node/esm ./src/workerPrep.ts",
+        "build:widgets": "ls",
+        "test": "cp ./cesium/Source/Cesium.js ./cesium/Source/Cesium.bak && cp ./dist/c137.mjs ./cesium/Source/Cesium.js && cd cesium && npm run test && cp Source/Cesium.bak Source/Cesium.js"
     },
-    {
-      "type": "LITECOIN",
-      "url": "https://live.blockcypher.com/ltc/address/M9ymdrwWBookFtJRnQn37ZzA2JpQZwqitU/"
+    "author": "DigitalArsenal.io, Inc. <admin@digitalarsenal.io> (https://digitalarsenal.io)",
+    "maintainers": [
+        "tj@digitalarsenal.io"
+    ],
+    "funding": [
+        {
+            "type": "BITCOIN",
+            "url": "https://live.blockcypher.com/btc/address/3H8Jh35kE652PLGNCzfB8QWmj7jkgQKhVm/"
+        },
+        {
+            "type": "LITECOIN",
+            "url": "https://live.blockcypher.com/ltc/address/M9ymdrwWBookFtJRnQn37ZzA2JpQZwqitU/"
+        },
+        {
+            "type": "ETHEREUM",
+            "url": "https://etherscan.io/address/0x19672c6d660B019BCBB86AAcf7D6f511fb744294"
+        }
+    ],
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@schemastore/package": "^0.0.6",
+        "globby": "^12.0.2",
+        "glsl-strip-comments": "^1.0.0",
+        "rollup": "^2.59.0",
+        "terser": "^5.9.0",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.4.4",
+        "uglify-js": "^3.14.3"
     },
-    {
-      "type": "ETHEREUM",
-      "url": "https://etherscan.io/address/0x19672c6d660B019BCBB86AAcf7D6f511fb744294"
+    "devDependencies": {
+        "@types/node": "^16.11.6",
+        "@types/uglify-js": "^3.13.1"
     }
-  ],
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@schemastore/package": "^0.0.6",
-    "globby": "^12.0.2",
-    "glsl-strip-comments": "^1.0.0",
-    "rollup": "^2.59.0",
-    "terser": "^5.9.0",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.4.4",
-    "uglify-js": "^3.14.3"
-  },
-  "devDependencies": {
-    "@types/node": "^16.11.6",
-    "@types/uglify-js": "^3.13.1"
-  }
 }
