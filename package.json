@@ -9,7 +9,7 @@
         "dist/c137.mjs"
     ],
     "scripts": {
-        "postinstall": "mkdir -p dist",
+        "postinstall": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/postinstall.ts",
         "update:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
         "build": "npm run refresh:cesium && npm run build:workers && node --max-old-space-size=4096 --loader ts-node/esm ./src/index.ts && npm run update:version",
         "build:short": "npm run build:workers && node --loader ts-node/esm ./src/index.ts",
@@ -48,7 +48,7 @@
         "uglify-js": "^3.14.3"
     },
     "devDependencies": {
-        "@types/node": "^16.11.6",
+        "@types/node": "^16.11.21",
         "@types/uglify-js": "^3.13.1"
     }
 }
