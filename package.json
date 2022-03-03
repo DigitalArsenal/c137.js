@@ -1,6 +1,6 @@
 {
     "name": "c137.js",
-    "version": "1.90.0",
+    "version": "1.91.0",
     "description": "A single-file distribution of CesiumJS",
     "main": "dist/c137.mjs",
     "type": "module",
@@ -13,7 +13,7 @@
         "update:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
         "build": "npm run refresh:cesium && npm run build:workers && node --max-old-space-size=4096 --loader ts-node/esm ./src/index.ts && npm run update:version",
         "build:short": "npm run build:workers && node --loader ts-node/esm ./src/index.ts",
-        "refresh:cesium": "cd cesium && git reset --hard && git clean -fxd && git fetch && git checkout 1.90 && npm i --force && npm run build",
+        "refresh:cesium": "cd cesium && git reset --hard && git clean -fxd && git fetch && git checkout 1.91 && npm i --force && npm run build",
         "build:workers": "rm -rf ./cesium/Source/Workers && cp -R ./cesium/Source/WorkersES6 ./cesium/Source/Workers && cp -R ./src/source-files/Source/WorkersES6/* ./cesium/Source/Workers/ && node --max-old-space-size=4096 --loader ts-node/esm ./src/workerPrep.ts",
         "build:widgets": "ls",
         "test": "cp ./cesium/Source/Cesium.js ./cesium/Source/Cesium.bak && cp ./dist/c137.mjs ./cesium/Source/Cesium.js && cd cesium && npm run test && cp Source/Cesium.bak Source/Cesium.js"
