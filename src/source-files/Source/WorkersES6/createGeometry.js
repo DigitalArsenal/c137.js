@@ -1,7 +1,6 @@
 import PrimitivePipeline from '../Scene/PrimitivePipeline';
 import createTaskProcessorWorker from './createTaskProcessorWorker';
 import defined from '../Core/defined';
-import when from '../ThirdParty/when';
 
 /*
 NOTE:  This needs to be done because during the rollup process, cesiumWorkers is declared twice if used in scope.
@@ -9,11 +8,11 @@ NOTE:  This needs to be done because during the rollup process, cesiumWorkers is
        without rollup detecting it and replacing it with an additional reference.
 */
 
-function getModule (moduleName) {
+function getModule(moduleName) {
     return self['cesiumWorkers'][moduleName];
 }
 
-function createGeometry (parameters, transferableObjects) {
+function createGeometry(parameters, transferableObjects) {
     var subTasks = parameters.subTasks;
     var length = subTasks.length;
     var resultsOrPromises = new Array(length);
@@ -32,7 +31,7 @@ function createGeometry (parameters, transferableObjects) {
         }
     }
 
-    return when.all(resultsOrPromises, function (results) {
+    return Promise.all(resultsOrPromises).then(function (results) {
         return PrimitivePipeline.packCreateGeometryResults(results, transferableObjects);
     });
 }

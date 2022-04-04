@@ -24,7 +24,7 @@ import ImageryLayer from "../../Scene/ImageryLayer.js";
 import SceneMode from "../../Scene/SceneMode.js";
 import TimeDynamicPointCloud from "../../Scene/TimeDynamicPointCloud.js";
 import knockout from "../../ThirdParty/knockout.js";
-import when from "../../ThirdParty/when.js";
+import defer from "../../Core/defer.js";
 import Animation from "../Animation/Animation.js";
 import AnimationViewModel from "../Animation/AnimationViewModel.js";
 import BaseLayerPicker from "../BaseLayerPicker/BaseLayerPicker.js";
@@ -171,45 +171,45 @@ function pickImageryLayerFeature(viewer, windowPosition) {
     description: "Loading feature information...",
   });
 
-  when(
-    imageryLayerFeaturePromise,
-    function (features) {
-      // Has this async pick been superseded by a later one?
-      if (viewer.selectedEntity !== loadingMessage) {
-        return;
-      }
+  Promise.resolve(
+    imageryLayerFeaturePromise).then(
+      function (features) {
+        // Has this async pick been superseded by a later one?
+        if (viewer.selectedEntity !== loadingMessage) {
+          return;
+        }
 
-      if (!defined(features) || features.length === 0) {
+        if (!defined(features) || features.length === 0) {
+          viewer.selectedEntity = createNoFeaturesEntity();
+          return;
+        }
+
+        // Select the first feature.
+        var feature = features[0];
+
+        var entity = new Entity({
+          id: feature.name,
+          description: feature.description,
+        });
+
+        if (defined(feature.position)) {
+          var ecfPosition = viewer.scene.globe.ellipsoid.cartographicToCartesian(
+            feature.position,
+            cartesian3Scratch
+          );
+          entity.position = new ConstantPositionProperty(ecfPosition);
+        }
+
+        viewer.selectedEntity = entity;
+      },
+      function () {
+        // Has this async pick been superseded by a later one?
+        if (viewer.selectedEntity !== loadingMessage) {
+          return;
+        }
         viewer.selectedEntity = createNoFeaturesEntity();
-        return;
       }
-
-      // Select the first feature.
-      var feature = features[0];
-
-      var entity = new Entity({
-        id: feature.name,
-        description: feature.description,
-      });
-
-      if (defined(feature.position)) {
-        var ecfPosition = viewer.scene.globe.ellipsoid.cartographicToCartesian(
-          feature.position,
-          cartesian3Scratch
-        );
-        entity.position = new ConstantPositionProperty(ecfPosition);
-      }
-
-      viewer.selectedEntity = entity;
-    },
-    function () {
-      // Has this async pick been superseded by a later one?
-      if (viewer.selectedEntity !== loadingMessage) {
-        return;
-      }
-      viewer.selectedEntity = createNoFeaturesEntity();
-    }
-  );
+    );
 
   return loadingMessage;
 }
@@ -2119,12 +2119,12 @@ function zoomToOrFly(that, zoomTarget, options, isFlight) {
   //bounding spheres have been computed.  Therefore we create and return
   //a deferred which will be resolved as part of the post-render step in the
   //frame that actually performs the zoom
-  var zoomPromise = when.defer();
+  var zoomPromise = defer();
   that._zoomPromise = zoomPromise;
   that._zoomIsFlight = isFlight;
   that._zoomOptions = options;
 
-  when(zoomTarget, function (zoomTarget) {
+  Promise.resolve(zoomTarget).then(function (zoomTarget) {
     //Only perform the zoom if it wasn't cancelled before the promise resolved.
     if (that._zoomPromise !== zoomPromise) {
       return;

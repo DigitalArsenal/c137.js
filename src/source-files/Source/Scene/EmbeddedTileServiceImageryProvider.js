@@ -8,7 +8,7 @@ import Rectangle from "../Core/Rectangle.js";
 import Resource from "../Core/Resource.js";
 import GeographicTilingScheme from "../Core/GeographicTilingScheme.js";
 import WebMercatorTilingScheme from "../Core/WebMercatorTilingScheme.js";
-import when from "../ThirdParty/when.js";
+import defer from "../Core/defer.js";
 import ImageryProvider from "../Scene/ImageryProvider.js";
 import UrlTemplateImageryProvider from "./UrlTemplateImageryProvider.js";
 import TimeDynamicImagery from "../Scene/TimeDynamicImagery.js";
@@ -70,7 +70,7 @@ function EmbeddedTileServiceImageryProvider(options) {
 
   var credit = options.credit;
   this._credit = typeof credit === "string" ? new Credit(credit) : credit;
-  this._readyPromise = when.defer();
+  this._readyPromise = defer();
 }
 
 function requestImage(imageryProvider, col, row, level, request, interval) {

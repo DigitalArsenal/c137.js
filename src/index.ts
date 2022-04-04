@@ -62,7 +62,11 @@ let mainSrc =
     (await bundleMain.generate(mainOptions)).output[0].code;
 
 let lisc = readFileSync('./cesium/Source/copyrightHeader.js');
-mainSrc = `${lisc}
+
+
+let mainSrcMin = `${lisc}
     ${(await minify(mainSrc)).code as string}`;
 
-writeFileSync(`./dist/c137.mjs`, mainSrc);
+writeFileSync(`./dist/c137.mjs`, `${lisc}
+${mainSrc as string}`);
+writeFileSync(`./dist/c137.min.mjs`, mainSrcMin);
