@@ -55,12 +55,12 @@ export function injectWorkers(workerString: string) {
                 match: /import zip from .*zip.js.*/g,
                 replacement: `import * as zip from "@zip.js/zip.js/lib/zip-full.js";`
             });
-             replacements.push({
+            replacements.push({
                 match: /const zWorkerUrl = buildModuleUrl\("ThirdParty\/Workers\/z-worker-pako.js"\);/g,
                 replacement: ``
             });
-           replacements.push({
-                match: /zip.configure\({[\s\S.]*;/g,
+            replacements.push({
+                match: /zip.configure\({[^;]*;/g,
                 replacement: ""
             })/**/
             replacements.forEach(function (_swap) {
