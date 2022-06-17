@@ -1,6 +1,6 @@
 {
     "name": "c137.js",
-    "version": "1.94.3",
+    "version": "1.94.3.1",
     "description": "A single-file distribution of CesiumJS",
     "main": "dist/c137.mjs",
     "type": "module",
@@ -9,7 +9,7 @@
         "dist/c137.mjs"
     ],
     "scripts": {
-        "postinstall": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/postinstall.ts",
+        "build:postinstall": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/postinstall.ts",
         "update:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
         "build": "npm run refresh:cesium && npm run build:workers && node --max-old-space-size=4096 --loader ts-node/esm ./src/index.ts && npm run update:version",
         "build:short": "npm run build:workers && node --loader ts-node/esm ./src/index.ts",
