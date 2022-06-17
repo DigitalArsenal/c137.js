@@ -50,9 +50,21 @@ export function injectWorkers(workerString: string) {
           return new Worker(URL.createObjectURL(_blob));})()`
                 });
             }
+
+            replacements.push({
+                match: /import zip from .*zip.js.*/g,
+                replacement: `import * as zip from "@zip.js/zip.js/lib/zip-full.js";`
+            });
+             replacements.push({
+                match: /const zWorkerUrl = buildModuleUrl\("ThirdParty\/Workers\/z-worker-pako.js"\);/g,
+                replacement: ``
+            });
+           replacements.push({
+                match: /zip.configure\({[\s\S.]*;/g,
+                replacement: ""
+            })/**/
             replacements.forEach(function (_swap) {
                 let _match = code.match(_swap.match);
-
                 if (_match) {
                     for (let _m = 0; _m < _match.length; _m++) {
                         code = code.replace(_match[_m], _swap.replacement);

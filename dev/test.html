@@ -102,7 +102,7 @@
 
       function main() {
         var viewer = new Viewer("cesiumContainer");
-
+        viewer.extend(viewerDragDropMixin);
         function computeCircle(radius) {
           var positions = [];
           for (var i = 0; i < 360; i++) {

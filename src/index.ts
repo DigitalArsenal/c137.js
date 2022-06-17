@@ -6,6 +6,7 @@ import { writeFileSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from 'url';
 import { minify } from "terser";
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const workerOptions: OutputOptions = {
     banner: "self.module = self.module || {};",
@@ -48,6 +49,7 @@ const bundleMain = await rollup({
         warn(warning);
     },
     plugins: [
+        nodeResolve(),
         prep(),
         replace("./cesium/Source", "./src/source-files/Source", false),
         transformPlugin(),
